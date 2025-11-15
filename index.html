@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack Pro - Personal Fitness Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>FitTrack Pro</h1>
+        <nav>
+            <button onclick="showSection('overview')">Overview</button>
+            <button onclick="showSection('activity')">Activity Log</button>
+            <button onclick="showSection('meal')">Meal Planner</button>
+            <button onclick="showSection('insights')">Insights</button>
+        </nav>
+    </header>
+    <main>
+        <section id="overview" class="page active">
+            <h2>Daily Wellness Overview</h2>
+            <div class="overview-grid">
+                <div class="metric">
+                    <h3>Steps Taken</h3>
+                    <div class="progress-circle" data-value="7500" data-max="10000">
+                        <div class="progress-fill"></div>
+                        <div class="progress-text">7500 / 10000</div>
+                    </div>
+                </div>
+                <div class="metric">
+                    <h3>Calories Burned</h3>
+                    <div class="progress-circle" data-value="450" data-max="600">
+                        <div class="progress-fill"></div>
+                        <div class="progress-text">450 / 600</div>
+                    </div>
+                </div>
+                <div class="metric">
+                    <h3>Water Intake</h3>
+                    <div class="progress-circle" data-value="6" data-max="8">
+                        <div class="progress-fill"></div>
+                        <div class="progress-text">6 / 8 glasses</div>
+                    </div>
+                </div>
+            </div>
+            <div class="clock">
+                <h3>Current Time</h3>
+                <div id="live-clock"></div>
+            </div>
+        </section>
+        <section id="activity" class="page">
+            <h2>Activity Log</h2>
+            <div class="filters">
+                <button onclick="filterActivities('all')">All</button>
+                <button onclick="filterActivities('morning')">Morning</button>
+                <button onclick="filterActivities('afternoon')">Afternoon</button>
+                <button onclick="filterActivities('evening')">Evening</button>
+            </div>
+            <ul id="activity-list"></ul>
+            <button onclick="openModal('add-activity-modal')">Add Activity</button>
+        </section>
+        <section id="meal" class="page">
+            <h2>Meal Planner</h2>
+            <div class="meal-grid">
+                <div class="meal-section" data-meal="breakfast">
+                    <h3>Breakfast</h3>
+                    <ul id="breakfast-list"></ul>
+                    <button onclick="openModal('add-meal-modal', 'breakfast')">Add Meal</button>
+                </div>
+                <div class="meal-section" data-meal="lunch">
+                    <h3>Lunch</h3>
+                    <ul id="lunch-list"></ul>
+                    <button onclick="openModal('add-meal-modal', 'lunch')">Add Meal</button>
+                </div>
+                <div class="meal-section" data-meal="dinner">
+                    <h3>Dinner</h3>
+                    <ul id="dinner-list"></ul>
+                    <button onclick="openModal('add-meal-modal', 'dinner')">Add Meal</button>
+                </div>
+            </div>
+            <div class="calorie-summary">
+                <h3>Total Daily Calories: <span id="total-calories">0</span></h3>
+            </div>
+        </section>
+        <section id="insights" class="page">
+            <h2>Insights & Summary</h2>
+            <div class="charts">
+                <div class="chart-container">
+                    <h3>Weekly Activities</h3>
+                    <canvas id="activity-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Weekly Calories</h3>
+                    <canvas id="calorie-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Activity Distribution</h3>
+                    <canvas id="pie-chart"></canvas>
+                </div>
+            </div>
+            <div class="actions">
+                <button onclick="downloadSummary()">Download Summary</button>
+                <button onclick="resetDashboard()">Reset Dashboard</button>
+            </div>
+        </section>
+    </main>
+    <!-- Modals -->
+    <div id="add-activity-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('add-activity-modal')">&times;</span>
+            <h3>Add New Activity</h3>
+            <form id="activity-form">
+                <label for="activity-name">Activity Name:</label>
+                <input type="text" id="activity-name" required>
+                <label for="activity-duration">Duration (mins):</label>
+                <input type="number" id="activity-duration" required>
+                <label for="activity-calories">Calories Burned:</label>
+                <input type="number" id="activity-calories" required>
+                <label for="activity-time">Time of Day:</label>
+                <select id="activity-time">
+                    <option value="morning">Morning</option>
+                    <option value="afternoon">Afternoon</option>
+                    <option value="evening">Evening</option>
+                </select>
+                <button type="submit">Add Activity</button>
+            </form>
+        </div>
+    </div>
+    <div id="add-meal-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('add-meal-modal')">&times;</span>
+            <h3>Add Meal</h3>
+            <form id="meal-form">
+                <label for="meal-name">Meal Name:</label>
+                <input type="text" id="meal-name" required>
+                <label for="meal-calories">Calories:</label>
+                <input type="number" id="meal-calories" required>
+                <input type="hidden" id="meal-type">
+                <button type="submit">Add Meal</button>
+            </form>
+        </div>
+    </div>
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('success-modal')">&times;</span>
+            <p id="success-message"></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

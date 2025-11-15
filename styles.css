@@ -1,0 +1,278 @@
+/* Dark Mode Theme */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #1e1e1e;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+header h1 {
+    margin: 0;
+    color: #4caf50;
+}
+
+nav {
+    margin-top: 1rem;
+}
+
+nav button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav button:hover {
+    background-color: #4caf50;
+}
+
+main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+h2 {
+    color: #4caf50;
+    border-bottom: 2px solid #4caf50;
+    padding-bottom: 0.5rem;
+}
+
+/* Overview Page */
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.metric {
+    text-align: center;
+}
+
+.progress-circle {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: conic-gradient(#4caf50 0deg, #333 0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-fill {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: #121212;
+}
+
+.progress-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.clock {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+#live-clock {
+    font-size: 2rem;
+    color: #4caf50;
+}
+
+/* Activity Log */
+.filters {
+    margin-bottom: 1rem;
+}
+
+.filters button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.filters button:hover {
+    background-color: #4caf50;
+}
+
+#activity-list {
+    list-style: none;
+    padding: 0;
+}
+
+#activity-list li {
+    background-color: #1e1e1e;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
+/* Meal Planner */
+.meal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.meal-section {
+    background-color: #1e1e1e;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.meal-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.meal-section li {
+    background-color: #333;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.calorie-summary {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 1.5rem;
+}
+
+/* Insights */
+.charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.chart-container {
+    background-color: #1e1e1e;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.actions {
+    text-align: center;
+}
+
+.actions button {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 0 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.actions button:hover {
+    background-color: #45a049;
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+    background-color: #1e1e1e;
+    margin: 15% auto;
+    padding: 2rem;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 4px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #fff;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+form input, form select, form button {
+    padding: 0.5rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+}
+
+form button {
+    margin-top: 1rem;
+    background-color: #4caf50;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .overview-grid, .meal-grid, .charts {
+        grid-template-columns: 1fr;
+    }
+    nav button {
+        display: block;
+        margin: 0.5rem 0;
+    }
+}
