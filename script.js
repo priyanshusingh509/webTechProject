@@ -11,29 +11,46 @@ const defaultMeals = {
         { name: 'Banana', calories: 100 }
     ],
     lunch: [
-        { name: 'Grilled Chicken Salad', calories: 400 },
+        { name: 'GSalad', calories: 400 },
         { name: 'Apple', calories: 80 }
     ],
     dinner: [
-        { name: 'Salmon with Veggies', calories: 500 },
+        { name: 'Veggies', calories: 500 },
         { name: 'Yogurt', calories: 150 }
     ]
 };
 
-const weeklyActivities = [5, 3, 7, 4, 6, 2, 8]; // Mon to Sun
+const weeklyActivities = [5, 3, 7, 4, 6, 2, 8];
 const weeklyCalories = [2000, 1800, 2200, 1900, 2100, 1700, 2300];
 const activityTypes = ['Running', 'Yoga', 'Walking', 'Cycling', 'Swimming'];
 
-// Load from localStorage or use defaults
+// Load from localStorage or defaults
 let activities = JSON.parse(localStorage.getItem('activities')) || defaultActivities;
 let meals = JSON.parse(localStorage.getItem('meals')) || defaultMeals;
 
-// DOM Elements
+// DOM
 const activityList = document.getElementById('activity-list');
 const breakfastList = document.getElementById('breakfast-list');
 const lunchList = document.getElementById('lunch-list');
 const dinnerList = document.getElementById('dinner-list');
 const totalCaloriesEl = document.getElementById('total-calories');
+
+function updateCaloriesProgressCircle() {
+    const totalBurned = activities.reduce((sum, a) => sum + a.calories, 0);
+
+    // Select the existing Calories Burned metric (2nd metric)
+    const circle = document.querySelector('.overview-grid .metric:nth-child(2) .progress-circle');
+    const text = circle.querySelector('.progress-text');
+
+    const max = parseInt(circle.dataset.max);
+
+    // Update the text
+    text.textContent = totalBurned + " / " + max;
+
+    // Update the ring fill
+    const percent = (totalBurned / max) * 100;
+    circle.style.background = `conic-gradient(#4caf50 ${percent * 3.6}deg, #333 0deg)`;
+}
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -42,7 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
     loadActivities();
     loadMeals();
-    updateProgressCircles();
+
+    updateCaloriesProgressCircle();   
+    updateProgressCircles();          
+
     initCharts();
 });
 
@@ -94,9 +114,13 @@ document.getElementById('activity-form').addEventListener('submit', (e) => {
     const duration = parseInt(document.getElementById('activity-duration').value);
     const calories = parseInt(document.getElementById('activity-calories').value);
     const time = document.getElementById('activity-time').value;
+
     activities.push({ name, duration, calories, time });
     localStorage.setItem('activities', JSON.stringify(activities));
+
     loadActivities();
+    updateCaloriesProgressCircle();  
+
     closeModal('add-activity-modal');
     showSuccess('Activity Added Successfully');
     document.getElementById('activity-form').reset();
@@ -115,7 +139,7 @@ function loadMealList(type) {
     list.innerHTML = '';
     meals[type].forEach((meal, index) => {
         const li = document.createElement('li');
-        li.innerHTML = `${meal.name} - ${meal.calories} cal <button onclick="removeMeal('${type}', ${index})">Remove</button>`;
+        li.innerHTML = `${meal.name} - ${meal.calories} cal <button style="margin-left:10px" onclick="removeMeal('${type}', ${index})">Remove</button>`;
         list.appendChild(li);
     });
 }
@@ -131,6 +155,7 @@ document.getElementById('meal-form').addEventListener('submit', (e) => {
     const name = document.getElementById('meal-name').value;
     const calories = parseInt(document.getElementById('meal-calories').value);
     const type = document.getElementById('meal-type').value;
+
     meals[type].push({ name, calories });
     localStorage.setItem('meals', JSON.stringify(meals));
     loadMeals();
@@ -169,7 +194,6 @@ function showSuccess(message) {
 let activityChart, calorieChart, pieChart;
 
 function initCharts() {
-    // Activity Chart
     const ctx1 = document.getElementById('activity-chart').getContext('2d');
     activityChart = new Chart(ctx1, {
         type: 'bar',
@@ -183,7 +207,6 @@ function initCharts() {
         }
     });
 
-    // Calorie Chart
     const ctx2 = document.getElementById('calorie-chart').getContext('2d');
     calorieChart = new Chart(ctx2, {
         type: 'line',
@@ -198,7 +221,6 @@ function initCharts() {
         }
     });
 
-    // Pie Chart
     const ctx3 = document.getElementById('pie-chart').getContext('2d');
     pieChart = new Chart(ctx3, {
         type: 'pie',
@@ -212,12 +234,10 @@ function initCharts() {
     });
 }
 
-// Download Summary (simulated)
 function downloadSummary() {
     alert('Summary downloaded (simulated)');
 }
 
-// Reset Dashboard
 function resetDashboard() {
     localStorage.removeItem('activities');
     localStorage.removeItem('meals');
@@ -226,5 +246,6 @@ function resetDashboard() {
     loadActivities();
     loadMeals();
     updateProgressCircles();
+    updateCaloriesProgressCircle();  
     alert('Dashboard reset');
 }
