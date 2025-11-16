@@ -92,6 +92,7 @@ h2 {
 }
 
 .progress-text {
+    z-index: 2;
     font-size: 1.2rem;
     font-weight: bold;
 }
